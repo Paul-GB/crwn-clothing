@@ -1,7 +1,7 @@
-import { connectFirestoreEmulator } from "firebase/firestore";
+//import { connectFirestoreEmulator } from "firebase/firestore";
 import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
-
+import Button from "../button/button.component";
 import { 
     signInWithGooglePopup,
     createUserDocumentFromAuth,
@@ -9,8 +9,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import './sign-in-form.styles.scss';
-import '../button/button.component';
-import Button from "../button/button.component";
+//import '../button/button.component';
 
 const defaultFormFields = {
     email: '',
@@ -20,9 +19,7 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
-
-    console.log(formFields);
-
+    
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
@@ -30,17 +27,20 @@ const SignInForm = () => {
     const signInWithGoogle = async () => {
         //const response = await signInWithGooglePopup();
         //console.log(response);
-        const { user } = await signInWithGooglePopup();
+        //const { user } = await signInWithGooglePopup();
+        // moved to the user context
+        await signInWithGooglePopup();
         //createUserDocumentFromAuth(user);
-        await createUserDocumentFromAuth(user);
+        //await createUserDocumentFromAuth(user);
+        //createUserDocumentFromAuth(user);
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
+            await signInAuthUserWithEmailAndPassword(email, password);
+            //setCurrentUser(user);
             resetFormFields();
         } catch(error) {
             switch(error.code) {
